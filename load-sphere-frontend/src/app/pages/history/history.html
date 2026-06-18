@@ -1,0 +1,83 @@
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="brand">
+      <span>🚛</span>
+      <div>
+        <h2>RouteProfit</h2>
+        <small>Calculator</small>
+      </div>
+    </div>
+    <nav>
+      <a routerLink="/dashboard"  class="nav-item">📊 Dashboard</a>
+      <a routerLink="/loads"      class="nav-item">📦 Browse Loads</a>
+      <a routerLink="/calculator" class="nav-item">🧮 Calculator</a>
+      <a routerLink="/history"    class="nav-item active">📋 History</a>
+    </nav>
+    <button class="logout-btn" (click)="logout()">🚪 Logout</button>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <h1>Trip History</h1>
+      <p>All your past trip profit calculations</p>
+    </div>
+
+    @if (loading) {
+      <div class="state-box">⏳ Loading history...</div>
+    }
+
+    @if (error) {
+      <div class="state-box error">{{ error }}</div>
+    }
+
+    @if (!loading && !error && history.length === 0) {
+      <div class="state-box">
+        <span>📋</span>
+        <h3>No history yet</h3>
+        <p>Calculate and save a trip to see it here</p>
+      </div>
+    }
+
+    @if (!loading && history.length > 0) {
+      <div class="table-card">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Route</th>
+              <th>Quoted Rate</th>
+              <th>Total Cost</th>
+              <th>Net Profit</th>
+              <th>Decision</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (h of history; track h.historyId; let i = $index) {
+              <tr>
+                <td>{{ i + 1 }}</td>
+                <td class="route-cell">{{ h.origin }} → {{ h.destination }}</td>
+                <td>₹{{ h.quotedRate ? h.quotedRate.toFixed(2) : '—' }}</td>
+                <td>₹{{ h.totalCost.toFixed(2) }}</td>
+                <td [class.profit-positive]="h.profitAmt > 0"
+                    [class.profit-negative]="h.profitAmt <= 0">
+                  ₹{{ h.profitAmt.toFixed(2) }}
+                </td>
+                <td>
+                  <span class="badge"
+                        [class.accept]="h.decision === 'Accept'"
+                        [class.reject]="h.decision === 'Reject'">
+                    {{ h.decision }}
+                  </span>
+                </td>
+                <td class="date-cell">{{ h.tripDate | date: 'dd MMM yyyy' }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+
+  </main>
+</div>

@@ -1,0 +1,156 @@
+<div class="layout">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="brand">
+      <span>🚛</span>
+      <div>
+        <h2>RouteProfit</h2>
+        <small>Calculator</small>
+      </div>
+    </div>
+    <nav>
+      <a routerLink="/dashboard"  class="nav-item">📊 Dashboard</a>
+      <a routerLink="/loads"      class="nav-item">📦 Browse Loads</a>
+      <a routerLink="/calculator" class="nav-item active">🧮 Calculator</a>
+      <a routerLink="/history"    class="nav-item">📋 History</a>
+    </nav>
+    <button class="logout-btn" (click)="logout()">🚪 Logout</button>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+    <div class="topbar">
+      <h1>Profit Calculator</h1>
+      <p>Enter trip costs to see if this load is worth taking</p>
+    </div>
+
+    @if (!selectedLoad) {
+      <div class="no-load">
+        <span>📦</span>
+        <h3>No load selected</h3>
+        <p>Go to Browse Loads and select a trip first</p>
+        <a routerLink="/loads" class="go-btn">Browse Loads</a>
+      </div>
+    }
+
+    @if (selectedLoad) {
+      <div class="content">
+
+        <!-- Load Summary -->
+        <div class="load-summary">
+          <h2>Selected Load</h2>
+          <div class="summary-row">
+            <div class="summary-item">
+              <span class="s-label">Route</span>
+              <span class="s-value">{{ selectedLoad.origin }} → {{ selectedLoad.destination }}</span>
+            </div>
+            <div class="summary-item">
+              <span class="s-label">Distance</span>
+              <span class="s-value">{{ selectedLoad.distanceKm }} km</span>
+            </div>
+            <div class="summary-item">
+              <span class="s-label">Cargo</span>
+              <span class="s-value">{{ selectedLoad.cargoType }}</span>
+            </div>
+            <div class="summary-item">
+              <span class="s-label">Quoted Rate</span>
+              <span class="s-value green">₹{{ selectedLoad.quotedRate.toFixed(2) }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="two-col">
+
+          <!-- Cost Input Form -->
+          <div class="form-card">
+            <h2>Enter Costs</h2>
+
+            <div class="field">
+              <label>Fuel Rate (₹ per litre)</label>
+              <input type="number" [(ngModel)]="fuelRate" name="fuelRate"
+                     placeholder="e.g. 95" min="0" />
+            </div>
+
+            <div class="field">
+              <label>Vehicle Mileage (km per litre)</label>
+              <input type="number" [(ngModel)]="mileageKmpl" name="mileageKmpl"
+                     placeholder="e.g. 8" min="0" />
+            </div>
+
+            <div class="field">
+              <label>Toll Charges (₹)</label>
+              <input type="number" [(ngModel)]="tollCharges" name="tollCharges"
+                     placeholder="e.g. 500" min="0" />
+            </div>
+
+            <div class="field">
+              <label>Driver Allowance (₹)</label>
+              <input type="number" [(ngModel)]="driverAllowance" name="driverAllowance"
+                     placeholder="e.g. 800" min="0" />
+            </div>
+
+            <div class="form-actions">
+              <button class="calc-btn" (click)="calculate()">Calculate</button>
+              <button class="reset-btn" (click)="reset()">Reset</button>
+            </div>
+          </div>
+
+          <!-- Result Panel -->
+          @if (calculated) {
+            <div class="result-card" [class.accept]="decision === 'Accept'" [class.reject]="decision === 'Reject'">
+              <h2>Result</h2>
+
+              <div class="result-decision">
+                <span class="decision-icon">{{ decision === 'Accept' ? '✅' : '❌' }}</span>
+                <span class="decision-text">{{ decision }} this Trip</span>
+              </div>
+
+              <div class="breakdown">
+                <div class="breakdown-row">
+                  <span>Fuel Cost</span>
+                  <span>₹{{ fuelCost.toFixed(2) }}</span>
+                </div>
+                <div class="breakdown-row">
+                  <span>Toll Charges</span>
+                  <span>₹{{ tollCharges.toFixed(2) }}</span>
+                </div>
+                <div class="breakdown-row">
+                  <span>Driver Allowance</span>
+                  <span>₹{{ driverAllowance.toFixed(2) }}</span>
+                </div>
+                <div class="breakdown-row total">
+                  <span>Total Cost</span>
+                  <span>₹{{ totalCost.toFixed(2) }}</span>
+                </div>
+                <div class="breakdown-row total">
+                  <span>Quoted Rate</span>
+                  <span>₹{{ selectedLoad.quotedRate.toFixed(2) }}</span>
+                </div>
+                <div class="breakdown-row profit">
+                  <span>Net Profit</span>
+                  <span>₹{{ profit.toFixed(2) }}</span>
+                </div>
+              </div>
+
+              @if (error) {
+                <div class="alert error">{{ error }}</div>
+              }
+              @if (saved) {
+                <div class="alert success">Trip saved to history!</div>
+              }
+
+              @if (!saved) {
+                <button class="save-btn" (click)="saveTrip()" [disabled]="saving">
+                  {{ saving ? 'Saving...' : '💾 Save to History' }}
+                </button>
+              }
+            </div>
+          }
+
+        </div>
+      </div>
+    }
+
+  </main>
+</div>

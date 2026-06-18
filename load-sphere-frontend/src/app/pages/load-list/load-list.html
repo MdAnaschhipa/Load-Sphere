@@ -1,0 +1,72 @@
+<div class="layout">
+  <nav class="topnav">
+    <div class="nav-brand">
+      <div class="icon">🚛</div>
+      <h1>RouteProfit</h1>
+    </div>
+    <div class="nav-links">
+      <a routerLink="/dashboard" class="nav-link">Dashboard</a>
+      <a routerLink="/loads"      class="nav-link active">Browse Loads</a>
+      <a routerLink="/calculator" class="nav-link">Calculator</a>
+      <a routerLink="/history"    class="nav-link">History</a>
+    </div>
+    <div class="nav-right">
+      <div class="user-pill">
+        <div class="user-avatar">{{ user?.name?.charAt(0) }}</div>
+        {{ user?.name }}
+      </div>
+      <button class="logout-btn" (click)="logout()">Logout</button>
+    </div>
+  </nav>
+
+  <main class="main">
+    <div class="page-header">
+      <h2>Browse Loads</h2>
+      <p>Select a load to calculate trip profitability</p>
+    </div>
+
+    @if (loading) {
+      <div class="state-box">⏳ Loading available loads...</div>
+    }
+
+    @if (error) {
+      <div class="state-box error">{{ error }}</div>
+    }
+
+    @if (!loading && !error) {
+      <div class="loads-grid">
+        @for (load of loads; track load.loadId) {
+          <div class="load-card">
+            <div class="load-header">
+              <div class="route">
+                <span class="city">{{ load.origin }}</span>
+                <span class="arrow">→</span>
+                <span class="city">{{ load.destination }}</span>
+              </div>
+              <span class="cargo-badge">{{ load.cargoType }}</span>
+            </div>
+
+            <div class="load-stats">
+              <div class="stat">
+                <span class="stat-label">Distance</span>
+                <span class="stat-value">{{ load.distanceKm }} km</span>
+              </div>
+              <div class="stat">
+                <span class="stat-label">Weight</span>
+                <span class="stat-value">{{ load.weightTons }} tons</span>
+              </div>
+              <div class="stat">
+                <span class="stat-label">Quoted Rate</span>
+                <span class="stat-value green">₹{{ load.quotedRate.toFixed(0) }}</span>
+              </div>
+            </div>
+
+            <button class="select-btn" (click)="selectLoad(load)">
+              Calculate Profit →
+            </button>
+          </div>
+        }
+      </div>
+    }
+  </main>
+</div>

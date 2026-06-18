@@ -1,0 +1,113 @@
+<div class="layout">
+
+  <!-- Top Nav -->
+  <nav class="topnav">
+    <div class="nav-brand">
+      <div class="icon">🚛</div>
+      <h1>RouteProfit</h1>
+    </div>
+
+    <div class="nav-links">
+      <a routerLink="/dashboard" class="nav-link active">Dashboard</a>
+
+      @if (user?.role === 'transporter') {
+        <a routerLink="/add-load" class="nav-link">Post Load</a>
+      }
+
+      @if (user?.role === 'owner' || user?.role === 'admin') {
+        <a routerLink="/loads"      class="nav-link">Browse Loads</a>
+        <a routerLink="/calculator" class="nav-link">Calculator</a>
+        <a routerLink="/history"    class="nav-link">History</a>
+      }
+    </div>
+
+    <div class="nav-right">
+      <div class="user-pill">
+        <div class="user-avatar">{{ user?.name?.charAt(0) }}</div>
+        {{ user?.name }}
+        <span class="role-badge {{ user?.role }}">{{ user?.role }}</span>
+      </div>
+      <button class="logout-btn" (click)="logout()">Logout</button>
+    </div>
+  </nav>
+
+  <!-- Main -->
+  <main class="main">
+    <div class="page-header">
+      <h2>Good morning, {{ user?.name }} 👋</h2>
+      <p>Here's what's happening with your account today.</p>
+    </div>
+
+    <!-- Owner/Admin Stats -->
+    @if (user?.role === 'owner' || user?.role === 'admin') {
+      <div class="cards">
+        <div class="card indigo">
+          <div class="card-icon">🚚</div>
+          <div class="card-info">
+            <span>Total Trips</span>
+            <h3>{{ totalTrips }}</h3>
+          </div>
+        </div>
+        <div class="card green">
+          <div class="card-icon">✅</div>
+          <div class="card-info">
+            <span>Accepted</span>
+            <h3>{{ acceptedTrips }}</h3>
+          </div>
+        </div>
+        <div class="card red">
+          <div class="card-icon">❌</div>
+          <div class="card-info">
+            <span>Rejected</span>
+            <h3>{{ rejectedTrips }}</h3>
+          </div>
+        </div>
+        <div class="card amber">
+          <div class="card-icon">💰</div>
+          <div class="card-info">
+            <span>Total Profit</span>
+            <h3>₹{{ totalProfit.toFixed(0) }}</h3>
+          </div>
+        </div>
+      </div>
+
+      <p class="section-title">Quick Actions</p>
+      <div class="actions">
+        <a routerLink="/loads" class="action-card">
+          <div class="action-icon">📦</div>
+          <h3>Browse Loads</h3>
+          <p>View available loads and pick a trip</p>
+        </a>
+        <a routerLink="/calculator" class="action-card">
+          <div class="action-icon">🧮</div>
+          <h3>Calculate Profit</h3>
+          <p>Enter costs and see if a trip is worth it</p>
+        </a>
+        <a routerLink="/history" class="action-card">
+          <div class="action-icon">📋</div>
+          <h3>Trip History</h3>
+          <p>Review all your past trip decisions</p>
+        </a>
+      </div>
+    }
+
+    <!-- Transporter Banner -->
+    @if (user?.role === 'transporter') {
+      <div class="transporter-banner">
+        <h3>Post a new load 📦</h3>
+        <p>Add load details so truck owners can browse and calculate profitability.</p>
+        <a routerLink="/add-load" class="banner-btn">Post Load →</a>
+      </div>
+
+      <p class="section-title">Quick Actions</p>
+      <div class="actions">
+        <a routerLink="/add-load" class="action-card">
+          <div class="action-icon">➕</div>
+          <h3>Post a Load</h3>
+          <p>Add a new load for truck owners to browse</p>
+        </a>
+      </div>
+    }
+
+  </main>
+</div>

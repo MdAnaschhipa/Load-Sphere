@@ -1,0 +1,63 @@
+<div class="page">
+
+  <!-- Left Panel -->
+  <div class="left">
+    <div class="left-brand">
+      <div class="icon">🚛</div>
+      <h1>RouteProfit</h1>
+    </div>
+    <div class="left-content">
+      <h2>Smart logistics,<br>smarter profits.</h2>
+      <p>Calculate trip profitability in seconds and make better decisions for your fleet.</p>
+      <div class="features">
+        <div class="feature">
+          <div class="feature-dot"></div>
+          <span>Real-time profit calculation</span>
+        </div>
+        <div class="feature">
+          <div class="feature-dot"></div>
+          <span>Browse loads from transporters</span>
+        </div>
+        <div class="feature">
+          <div class="feature-dot"></div>
+          <span>Track your trip history</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right Panel -->
+  <div class="right">
+    <div class="form-box">
+      <h2>Welcome back</h2>
+      <p class="sub">Sign in to your RouteProfit account</p>
+
+      @if (error) {
+        <div class="error-box">{{ error }}</div>
+      }
+
+      <form (ngSubmit)="onSubmit()">
+        <div class="field">
+          <label>Email address</label>
+          <input type="email" [(ngModel)]="email" name="email"
+                 placeholder="you@example.com" required />
+        </div>
+
+        <div class="field">
+          <label>Password</label>
+          <input type="password" [(ngModel)]="password" name="password"
+                 placeholder="••••••••" required />
+        </div>
+
+        <button type="submit" class="submit-btn" [disabled]="loading">
+          {{ loading ? 'Signing in...' : 'Sign in' }}
+        </button>
+      </form>
+
+      <p class="footer-link">
+        Don't have an account? <a routerLink="/register">Create one</a>
+      </p>
+    </div>
+  </div>
+
+</div>

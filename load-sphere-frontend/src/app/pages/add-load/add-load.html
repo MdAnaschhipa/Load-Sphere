@@ -1,0 +1,87 @@
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="brand">
+      <span>🚛</span>
+      <div>
+        <h2>RouteProfit</h2>
+        <small>Calculator</small>
+      </div>
+    </div>
+    <nav>
+      <a routerLink="/dashboard" class="nav-item">📊 Dashboard</a>
+      <a routerLink="/add-load"  class="nav-item active">➕ Post Load</a>
+    </nav>
+    <button class="logout-btn" (click)="logout()">🚪 Logout</button>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <h1>Post a Load</h1>
+      <p>Fill in the details to post a new load for truck owners</p>
+    </div>
+
+    <div class="form-card">
+
+      @if (error) {
+        <div class="alert error">{{ error }}</div>
+      }
+      @if (success) {
+        <div class="alert success">{{ success }}</div>
+      }
+
+      <form (ngSubmit)="onSubmit()">
+
+        <div class="two-col">
+          <div class="field">
+            <label>Origin City</label>
+            <input type="text" [(ngModel)]="origin" name="origin"
+                   placeholder="e.g. Mumbai" required />
+          </div>
+
+          <div class="field">
+            <label>Destination City</label>
+            <input type="text" [(ngModel)]="destination" name="destination"
+                   placeholder="e.g. Pune" required />
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="field">
+            <label>Cargo Type</label>
+            <input type="text" [(ngModel)]="cargoType" name="cargoType"
+                   placeholder="e.g. Electronics" required />
+          </div>
+
+          <div class="field">
+            <label>Weight (tons)</label>
+            <input type="number" [(ngModel)]="weightTons" name="weightTons"
+                   placeholder="e.g. 5" min="0" required />
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="field">
+            <label>Distance (km)</label>
+            <input type="number" [(ngModel)]="distanceKm" name="distanceKm"
+                   placeholder="e.g. 150" min="0" required />
+          </div>
+
+          <div class="field">
+            <label>Quoted Rate (₹)</label>
+            <input type="number" [(ngModel)]="quotedRate" name="quotedRate"
+                   placeholder="e.g. 8000" min="0" required />
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="submit-btn" [disabled]="loading">
+            {{ loading ? 'Posting...' : '➕ Post Load' }}
+          </button>
+          <button type="button" class="reset-btn" (click)="reset()">Reset</button>
+        </div>
+
+      </form>
+    </div>
+  </main>
+</div>
