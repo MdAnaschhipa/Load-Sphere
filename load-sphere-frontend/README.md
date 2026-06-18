@@ -1,57 +1,105 @@
-# RouteProfit Frontend 🚛
+# Load Sphere Frontend 🚚
 
-A modern Angular web application for calculating and tracking profitability of transport/truck routes.
-
-## 🔗 Related Repository
-- Backend: [rpc-backend](https://github.com/anas0710/rpc-backend)
+A modern Angular web application for the **Load Sphere Logistics Management Platform**, designed to help transportation businesses manage loads, track operational costs, analyze route profitability, and monitor shipment activities through an intuitive user interface.
 
 ## 🚀 Features
-- Calculate profit/loss for truck routes
-- Manage and track loads and deliveries
-- Track fuel costs and trip expenses
-- View profit history and dashboard
-- User authentication (Login/Register)
+
+* Route profitability calculator
+* Load and shipment management
+* Fuel and transportation cost tracking
+* Profit history dashboard
+* User authentication (Login/Register)
+* Responsive user interface
+* REST API integration with backend services
 
 ## 🛠️ Tech Stack
-- Angular 17+
-- TypeScript
-- HTML5 / CSS3
+
+* Angular
+* TypeScript
+* HTML5
+* CSS3
+* RxJS
+* Angular Router
+* Angular HttpClient
 
 ## ⚙️ Setup & Installation
 
 ### Prerequisites
-- Node.js (v18+)
-- Angular CLI
 
-### Steps
-1. Clone the repository
-   git clone https://github.com/anas0710/routeprofit-frontend.git
+* Node.js (18+ recommended)
+* npm
+* Angular CLI
 
-2. Navigate to the project folder
-   cd routeprofit-frontend
+### Installation
 
-3. Install dependencies
-   npm install
+#### 1. Clone Repository
 
-4. Run the development server
-   ng serve
+```bash
+git clone https://github.com/MdAnaschhipa/Load-Sphere.git
+```
 
-5. Open in browser
-   http://localhost:4200
+#### 2. Navigate to Frontend
 
-> ⚠️ Make sure the backend server is running on port 8080 before using the app.
+```bash
+cd load-sphere-frontend
+```
+
+#### 3. Install Dependencies
+
+```bash
+npm install
+```
+
+#### 4. Run Development Server
+
+```bash
+ng serve
+```
+
+#### 5. Open Application
+
+```text
+http://localhost:4200
+```
 
 ## 📁 Project Structure
+
+```text
 src/
 ├── app/
 │   ├── core/
-│   │   ├── guards/       # Auth guards
-│   │   └── services/     # API services
-│   ├── models/           # Data models
-│   └── pages/
-│       ├── calculator/   # Profit calculator
-│       ├── dashboard/    # Main dashboard
-│       ├── history/      # Profit history
-│       ├── load-list/    # Load management
-│       ├── login/        # Authentication
-│       └── register/     # User registration
+│   ├── models/
+│   ├── pages/
+│   └── services/
+├── assets/
+└── environments/
+```
+
+## 📱 Main Modules
+
+* User Authentication
+* Dashboard
+* Route Profit Calculator
+* Load Management
+* Profit History
+* Cost Tracking
+
+## 🔮 Future Enhancements
+
+* Real-time shipment tracking
+* Analytics dashboard
+* Notifications system
+* Route optimization
+* Role-based access control
+* Report generation
+
+## 👨‍💻 Author
+
+**Mohammad Anas Chhipa**
+
+B.Tech Computer Science & Engineering
+Medicaps University, Indore
+
+---
+
+Load Sphere Frontend provides a user-friendly interface for managing logistics operations, tracking transportation costs, and improving business profitability.
